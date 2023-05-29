@@ -7,20 +7,23 @@
     <title>coding train</title>
 </head>
 <body>
-    <img src="" id = "rainbow">
-    <br>
     <p id = "paragraph"></p>
-    <script>
-        console.log("about to fetch rainbow") ;
+    <br>
+    <hr>
 
-        callRainbow() .then(() => {
-            console.log('called rainbow') ;
-        }) .then(() => {
-            callPoem() ;
-            console.log("called poem") ;
-        })
-        .catch(error => {
-            console.error(error) ;
+    <script>
+        console.log("about to fetch poem and 3 rainbows !") ;
+
+        const rainbows = [
+            "rainbow.jpg", 
+            "rainbow2.jpg", 
+            "rainbow3.jpg"
+        ] ;
+
+        callPoem() .then(() => {
+            for (const rainbow in rainbows) {
+                callRainbow(rainbow) ;
+            }
         }) ;
 
         async function callPoem(){
@@ -29,10 +32,13 @@
             document.getElementById('paragraph').innerText = poem ;
         }
 
-        async function callRainbow (){
-            const response = await fetch('rainbow.jpg') ;
+        async function callRainbow (rainbow){
+            const response = await fetch(rainbow) ;
             const blob = await response.blob() ;
-            document.getElementById('rainbow').src = URL.createObjectURL(blob) ;
+            let img = document.createElement("img") ;
+            img.src = URL.createObjectURL(blob) ;
+            img.width = 200 ;
+            document.body.append(img) ;
         }
 
 
