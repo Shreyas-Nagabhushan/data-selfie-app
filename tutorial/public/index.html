@@ -7,6 +7,27 @@
     <title>home page</title>
 </head>
 <body>
-    hello this is the index page
+    <script>
+        if ("geolocation" in navigator) {
+        console.log('available') ;
+        navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude ;
+        const lon = position.coords.longitude ;
+        console.log(lat) ;
+        console.log(lon) ;
+        document.getElementById('latitude').textContent = lat ;
+        document.getElementById('longitude').textContent = lon ;
+        });
+        }
+        else {
+        console.log('not available') ;
+        }
+    </script>
+    <h1>Data selfie app</h1>
+    <hr>
+    <p>
+        latitude : <span id = "latitude"></span>&deg; <br>
+        longitude : <span id = "longitude"></span>&deg;
+    </p>
 </body>
 </html>
