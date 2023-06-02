@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>query database elements</title>
+</head>
+<body>
+    <h1>Data selfie app </h1>
+    <hr>
+    <script>
+        getData() ;
+        async function getData() {
+            const response = await fetch('/api') ;
+            const data = await response.json() ;
+            console.log(data) ;
+            for(item of data){
+                const root = document.createElement('div') ;
+                const geo = document.createElement('div') ;
+                const mood = document.createElement('div') ;
+                const time = document.createElement('div') ;
+                root.append(time, geo, mood) ;
+
+                geo.textContent = `geo : latitude = ${item.lat} , longitude = ${item.lon} ` ;
+                mood.textContent = `mood : ${item.message}` ;
+                time.textContent = `time : ${item.timestamp}` ;
+                document.body.append(root) ;
+            }
+        }
+        
+    </script>
+</body>
+</html>
