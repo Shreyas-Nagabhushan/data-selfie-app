@@ -4,58 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
     <title>home page</title>
 </head>
 <body>
     <h1>Data selfie app</h1>
     <hr>
+    <a href="logs">list</a>
     <p>
         latitude : <span id = "latitude"></span>&deg; <br>
         longitude : <span id = "longitude"></span>&deg;<br>
-        what is your favourite vegetable ? <br><input type="text" id = "favourite">
+        what is your favourite fruit ? <br><input type="text" id = "favourite">
         <button id = "submit">submit</button><br>        
     </p>
     
 
-    <script>
-        let lat, lon, message ;
-        let data ;
-        let available = false ;
-
-        if ("geolocation" in navigator) {
-        console.log('available') ;
-        available = true ;
-        navigator.geolocation.getCurrentPosition(async (position) => {
-        lat = position.coords.latitude ;
-        lon = position.coords.longitude ;
-        data = {lat, lon} ;
-        document.getElementById('latitude').textContent = lat ;
-        document.getElementById('longitude').textContent = lon ;
-        })
-        }
-
-        else {
-            available = false ;
-            console.log('not available') ;
-        }
-
-        if(available){
-            document.getElementById("submit").addEventListener("click", async () => {
-            message = document.getElementById('favourite').value  ;
-            data.message = message ;
-            const options = {
-                method : 'POST' , 
-                body : JSON.stringify(data) ,
-                headers :{
-                    'Content-Type' : 'application/json'
-                }   
-            } ;
-            const response = await fetch('/api', options) ;
-            const info = await response.json() ;
-            console.log(info) ;
-            });
-        }
-
-    </script>
+    <script src="sketch.js"> </script>
 </body>
 </html>
