@@ -12,21 +12,22 @@
     <p>
         latitude : <span id = "latitude"></span>&deg; <br>
         longitude : <span id = "longitude"></span>&deg;<br>
-        <button id = "submit">submit</button><br>
+        what is your favourite vegetable ? <br><input type="text" id = "favourite">
+        <button id = "submit">submit</button><br>        
     </p>
     
 
     <script>
-        let lat, lon ;
+        let lat, lon, message ;
         let data ;
         let available = false ;
+
         if ("geolocation" in navigator) {
         console.log('available') ;
         available = true ;
         navigator.geolocation.getCurrentPosition(async (position) => {
         lat = position.coords.latitude ;
         lon = position.coords.longitude ;
-        console.log({lat, lon}) ;
         data = {lat, lon} ;
         document.getElementById('latitude').textContent = lat ;
         document.getElementById('longitude').textContent = lon ;
@@ -40,6 +41,8 @@
 
         if(available){
             document.getElementById("submit").addEventListener("click", async () => {
+            message = document.getElementById('favourite').value  ;
+            data.message = message ;
             const options = {
                 method : 'POST' , 
                 body : JSON.stringify(data) ,

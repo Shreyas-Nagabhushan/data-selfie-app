@@ -1,21 +1,20 @@
 const express = require('express') ;
+const Datastore = require('nedb') ;
 const app = express() ;
-
-const database = [] ;
 
 app.listen(3000, () => console.log('listening at port 3000')) ;
 app.use(express.static('public')) ;
 app.use(express.json({ limit : '1mb' })) ;
 
+const database = new Datastore('database.db') ;
+database.loadDatabase() ;
+
 app.post('/api', (request, response) => {
     console.log('I got a request !')
     console.log(request.body) ;
     const data = request.body ;
-    database.push(data) ;
-    console.log("number of entries : %d", database.length) ;
-    response.json({
-        status : 'success', 
-        latitude : request.body.lat ,
-        longitude : request.body.lon
-    }) ;
+    const timestamp = Date.now() ;
+    data.timestamp = timestamp ;
+    database.insert(data) ;
+    response.json(data) ;
 }) ;
